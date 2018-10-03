@@ -37,7 +37,7 @@ if __name__ == '__main__':
         if args.list:
             sheets = integrator_database.get_all_sheets()
             print()
-            row_format = "{:45} | {:5} | {}"
+            row_format = "{:45} | {:%d} | {}" % len(max(sheets, key=lambda x: len(x['range']))['range'])
             print(row_format.format("Google Sheet ID", "Range", "Row Count"))
             for s in sheets:
                 print(row_format.format(s['sheet_id'], s['range'], s['last_row']))
