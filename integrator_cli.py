@@ -31,6 +31,7 @@ if __name__ == '__main__':
             integrator_database.init_spreadsheet(sheet_id, sheet_range)
 
         if args.remove:
+            integrator_database.remove_spreadsheet(str(args.remove))
             print("Google Sheet with ID {} has been removed".format(args.remove))
 
         if args.list:
