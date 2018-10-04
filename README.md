@@ -10,6 +10,14 @@ Python 3 and the following modules:
 - google-api-python-client 
 - oauth2client
 
+## Getting Started
+
+Follow these steps after downloading the repo:
+
+1. Edit the Zendesk config file with your credentials: data/config/zendesk.json
+
+2. Setup the database (see below)
+
 ## Usage
 
 ### Setup or reset the database:

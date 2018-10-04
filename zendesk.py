@@ -23,3 +23,11 @@ class Zendesk:
 
     def create_ticket(self, payload):
         return self.post('tickets', payload)
+
+
+def get_zendesk_client_from_config(file_path):
+    with open(file_path, 'r') as infile:
+        c = json.loads(infile.read())
+        domain = c.get('domain')
+        creds = (c.get('username'), c.get('password'))
+        return Zendesk(domain=domain, creds=creds)
