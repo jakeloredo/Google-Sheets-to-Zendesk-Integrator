@@ -1,8 +1,11 @@
 import sqlite3
+import os
+import sys
 
 
 def get_db():
-    conn = sqlite3.connect('./data/db/integrator.db')
+    db_path = os.path.join(sys.path[0],'data','db','integrator.db')
+    conn = sqlite3.connect(db_path)
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -10,7 +13,8 @@ def get_db():
 def init_db():
     db = get_db()
     c = db.cursor()
-    with open('./data/db/schema.sql', 'r') as sql:
+    sql_path = os.path.join(sys.path[0],'data','db', 'schema.sql')
+    with open(sql_path, 'r') as sql:
         c.executescript(sql.read())
     c.close()
 
@@ -20,6 +24,14 @@ def init_spreadsheet(spreadsheet_id, sheet_range):
     c = db.cursor()
     p = (spreadsheet_id, sheet_range)
     c.execute('INSERT INTO spreadsheet_counts VALUES(?, ?, 0)', p)
+    db.commit()
+    c.close()
+
+
+def remove_spreadsheet(spreadsheet_id):
+    db = get_db()
+    c = db.cursor()
+    c.execute('DELETE FROM spreadsheet_counts WHERE sheet_id=?', (spreadsheet_id,))
     db.commit()
     c.close()
 
@@ -51,4 +63,5 @@ def get_all_sheets():
 
 if __name__ == '__main__':
     init_db()
+
 
