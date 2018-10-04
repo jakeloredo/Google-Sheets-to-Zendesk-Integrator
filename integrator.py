@@ -1,7 +1,10 @@
+import sys
+import os
+
 from gsheets import GoogleSheet
 from integrator_database import get_all_sheets
 from integrator_database import update_last_row_by_id
-from zendesk import Zendesk
+from zendesk import get_zendesk_client_from_config
 
 
 def make_zendesk_payload(subject, gs_row, gs_headers):
@@ -23,12 +26,9 @@ def make_zendesk_payload(subject, gs_row, gs_headers):
 
 
 def open_zendesk_ticket(payload):
-    # TODO: Load from a config file or something
-    zendesk_subdomain = 'subdomaingoeshere'
-    credentials = ('usernamegoeshere', 'password')
-
     try:
-        zd = Zendesk(zendesk_subdomain, credentials)
+        config_path = os.path.join(sys.path[0], 'data', 'config', 'zendesk.json')
+        zd = get_zendesk_client_from_config(config_path)
         r = zd.create_ticket(payload)
     except:
         return None
@@ -77,3 +77,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
