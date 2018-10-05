@@ -10,15 +10,18 @@ Python 3 and the following modules:
 - google-api-python-client 
 - oauth2client
 
-## Getting Started
+You will need credentials.json and client_secret.json files for Google's API. Follow these instructions to get them:
+https://developers.google.com/sheets/api/guides/authorizing
 
-Setup a Google Sheet as described in the below example.
+## Getting Started
 
 Follow these steps after downloading the repo:
 
 1. Edit the Zendesk config file with your credentials: data/config/zendesk.json
 
 2. Setup the database (see below)
+
+3. Copy your credentials.json and client_secret.json files to the folder data/config
 
 ## Usage
 
