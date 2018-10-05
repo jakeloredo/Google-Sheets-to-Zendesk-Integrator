@@ -1,6 +1,9 @@
+import sys
+import os
+from httplib2 import Http
+
 from googleapiclient.discovery import build
 from oauth2client import file, client, tools
-from httplib2 import Http
 
 
 class GoogleSheets:
@@ -12,10 +15,12 @@ class GoogleSheets:
         # Basic setup from quick start guide
         # Setup the Sheets API
         SCOPES = 'https://www.googleapis.com/auth/spreadsheets.readonly'
-        store = file.Storage('credentials.json')
+        credentials_path = os.path.join(sys.path[0],'data','config','credentials.json')
+        store = file.Storage(credentials_path)
         creds = store.get()
         if not creds or creds.invalid:
-            flow = client.flow_from_clientsecrets('client_secret.json', SCOPES)
+            client_secret_path = os.path.join(sys.path[0], 'data', 'config', 'client_secret.json')
+            flow = client.flow_from_clientsecrets(client_secret_path, SCOPES)
             creds = tools.run_flow(flow, store)
 
         self.service = build('sheets', 'v4', http=creds.authorize(Http()))
